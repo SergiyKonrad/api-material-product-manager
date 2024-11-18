@@ -5,6 +5,7 @@ const Product = require('../models/productModel')
 // @route   GET /products
 // @access  Public
 const getProducts = async (req, res) => {
+  console.log('GET /products triggered')
   try {
     const products = await Product.find()
     res.status(200).json(products)
