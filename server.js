@@ -4,6 +4,8 @@ const dotenv = require('dotenv')
 /* eslint-disable no-unused-vars */
 require('colors')
 dotenv.config()
+const cors = require('cors')
+app.use(cors())
 
 // Connect to MongoDB
 connectDB()

@@ -30,6 +30,10 @@ const productSchema = new mongoose.Schema(
       //   message: 'Price must be a numeric value with up to 4 digits',
       // },
     },
+    image: {
+      type: String,
+      default: 'https://via.placeholder.com/150?text=No+Image+Available', // Default image URL
+    },
   },
   {
     timestamps: true, // Adds createdAt and updatedAt fields automatically
