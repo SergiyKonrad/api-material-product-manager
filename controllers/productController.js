@@ -1,9 +1,8 @@
 // logic for handling requests
 const Product = require('../models/productModel')
 
-// @desc    Get all products
 // @route   GET /products
-// @access  Public
+
 const getProducts = async (req, res) => {
   // console.log('GET /products triggered')
   try {
@@ -14,9 +13,7 @@ const getProducts = async (req, res) => {
   }
 }
 
-// @desc    Create a new product
 // @route   POST /product
-// @access  Public
 const createProduct = async (req, res) => {
   // console.log('POST /product created')
   const { name, description, price } = req.body
@@ -35,9 +32,7 @@ const createProduct = async (req, res) => {
   }
 }
 
-// @desc    Update a product
 // @route   PUT /product/:id
-// @access  Public
 const updateProduct = async (req, res) => {
   // console.log('PUT /product/:id updated')
   const { id } = req.params
@@ -77,9 +72,7 @@ const updateProduct = async (req, res) => {
   }
 }
 
-// @desc    Delete a product
 // @route   DELETE /product/:id
-// @access  Public
 const deleteProduct = async (req, res) => {
   // console.log('DELETE /product/:id deleted')
   const { id } = req.params

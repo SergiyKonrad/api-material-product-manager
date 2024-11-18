@@ -1,15 +1,21 @@
 {
   "name": "api-material-product-manager",
   "version": "1.0.0",
+  "description": "A backend REST API for managing products using Node.js, Express, and MongoDB.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "REST API",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "Product Manager"
+  ],
+  "author": "Sergiy Konrad",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -19,5 +25,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
