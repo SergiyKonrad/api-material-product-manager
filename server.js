@@ -1,16 +1,20 @@
 const express = require('express')
+const cors = require('cors')
 const connectDB = require('./config/db')
 const dotenv = require('dotenv')
 /* eslint-disable no-unused-vars */
 require('colors')
+
+// Load environment variables
 dotenv.config()
-const cors = require('cors')
-app.use(cors())
 
 // Connect to MongoDB
 connectDB()
 
-const app = express()
+const app = express() // Initialize app
+
+// Middleware to enable CORS
+app.use(cors())
 
 // Middleware to parse JSON
 app.use(express.json())
@@ -43,22 +47,26 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`.cyan.bold))
 // --- Minimalistic and straight to the point version.---
 // Easier to read for a smaller project without extra functionality like error handling.
 /*
-const express = require('express')
-const connectDB = require('./config/db')
-const productRoutes = require('./routes/productRoutes')
-require('colors')
-require('dotenv').config()
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+require('dotenv').config();
+require('colors');
 
-const app = express()
-const PORT = process.env.PORT || 5000
+// Connect to MongoDB
+connectDB();
 
-connectDB()
+const app = express(); // Initialize app
 
 // Middleware
-app.use(express.json())
+app.use(cors()); // Enable CORS
+app.use(express.json()); // Parse JSON requests
 
+// Import product routes
+const productRoutes = require('./routes/productRoutes');
+app.use('/api', productRoutes); // Use '/api' as the base route
 
-app.use('/api', productRoutes)
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`.green.bold))
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`.green.bold));
 */
