@@ -1,16 +1,18 @@
 // logic for handling requests
 const Product = require('../models/productModel')
 
-// @route   GET /products
 const getProducts = async (req, res) => {
-  // console.log('GET /products triggered')
   try {
     const limit = parseInt(req.query.limit, 10) || 5
     const products = await Product.find().limit(limit)
+
+    console.log(`GET /products - Retrieved ${products.length} products`)
     res.status(200).json(products)
   } catch (error) {
-    console.error('Error fetching products:', error)
-    res.status(500).json({ message: 'Failed to fetch products', error })
+    console.error('Error fetching products:', error.message)
+    res
+      .status(500)
+      .json({ message: 'Failed to fetch products', error: error.message })
   }
 }
 
@@ -20,17 +22,25 @@ const createProduct = async (req, res) => {
   const { name, description, price } = req.body
 
   // Validation
-  if (!name || !description || !price) {
+  if (!name?.trim() || !description?.trim() || !price) {
     return res.status(400).json({ message: 'All fields are required' })
   }
 
   try {
-    const product = new Product({ name, description, price })
+    const product = new Product({
+      name: name.trim(),
+      description: description.trim(),
+      price,
+    })
     const savedProduct = await product.save()
-    console.log('Product created:', savedProduct)
+
+    console.log('POST /product - Product created:', savedProduct)
     res.status(201).json(savedProduct)
   } catch (error) {
-    res.status(500).json({ message: 'Failed to create product', error })
+    console.error('Error creating product:', error.message)
+    res
+      .status(500)
+      .json({ message: 'Failed to create product', error: error.message })
   }
 }
 
@@ -41,17 +51,21 @@ const updateProduct = async (req, res) => {
   const { name, description, price } = req.body
 
   // Validation
-  if (name && (name.length < 3 || name.length > 50)) {
+  if (!name?.trim() || name.length < 3 || name.length > 50) {
     return res
       .status(400)
       .json({ message: 'Name must be between 3 and 50 characters' })
   }
-  if (description && (description.length < 10 || description.length > 200)) {
+  if (
+    !description?.trim() ||
+    description.length < 10 ||
+    description.length > 200
+  ) {
     return res
       .status(400)
       .json({ message: 'Description must be between 10 and 200 characters' })
   }
-  if (price && (price <= 0 || price > 10000)) {
+  if (price === undefined || price <= 0 || price > 10000) {
     return res
       .status(400)
       .json({ message: 'Price must be greater than 0 and less than 10000' })
@@ -60,7 +74,7 @@ const updateProduct = async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
-      { name, description, price },
+      { name: name.trim(), description: description.trim(), price },
       { new: true, runValidators: true },
     )
 
@@ -68,16 +82,18 @@ const updateProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' })
     }
 
-    console.log('Product updated:', updatedProduct)
+    console.log('PUT /product/:id - Product updated:', updatedProduct)
     res.status(200).json(updatedProduct)
   } catch (error) {
-    res.status(500).json({ message: 'Failed to update product', error })
+    console.error('Error updating product:', error.message)
+    res
+      .status(500)
+      .json({ message: 'Failed to update product', error: error.message })
   }
 }
 
 // @route   DELETE /product/:id
 const deleteProduct = async (req, res) => {
-  // console.log(`DELETE /product/${req.params.id} endpoint triggered`);
   const { id } = req.params
 
   try {
@@ -87,10 +103,13 @@ const deleteProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' })
     }
 
-    console.log('Product deleted:', deletedProduct)
+    console.log('DELETE /product/:id - Product deleted:', deletedProduct)
     res.status(200).json({ message: 'Product deleted successfully' })
   } catch (error) {
-    res.status(500).json({ message: 'Failed to delete product', error })
+    console.error('Error deleting product:', error.message)
+    res
+      .status(500)
+      .json({ message: 'Failed to delete product', error: error.message })
   }
 }
 
