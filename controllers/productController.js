@@ -1,11 +1,27 @@
 // logic for handling requests
 const Product = require('../models/productModel')
 
-const getProducts = async (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit, 10) || 5
-    const products = await Product.find().limit(limit)
+// const getProducts = async (req, res) => {
+//   try {
+//     const limit = parseInt(req.query.limit, 10) || 5
+//     const products = await Product.find().limit(limit)
 
+//     console.log(`GET /products - Retrieved ${products.length} products`)
+//     res.status(200).json(products)
+//   } catch (error) {
+//     console.error('Error fetching products:', error.message)
+//     res
+//       .status(500)
+//       .json({ message: 'Failed to fetch products', error: error.message })
+//   }
+// }
+
+const getProducts = async (req, res) => {
+  const limit = parseInt(req.query.limit, 10) || 5 // Default limit
+  const offset = parseInt(req.query.offset, 10) || 0 // Default offset
+
+  try {
+    const products = await Product.find().skip(offset).limit(limit)
     console.log(`GET /products - Retrieved ${products.length} products`)
     res.status(200).json(products)
   } catch (error) {
