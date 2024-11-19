@@ -2,20 +2,21 @@
 const Product = require('../models/productModel')
 
 // @route   GET /products
-
 const getProducts = async (req, res) => {
   // console.log('GET /products triggered')
   try {
-    const products = await Product.find()
+    const limit = parseInt(req.query.limit, 10) || 5
+    const products = await Product.find().limit(limit)
     res.status(200).json(products)
   } catch (error) {
+    console.error('Error fetching products:', error)
     res.status(500).json({ message: 'Failed to fetch products', error })
   }
 }
 
 // @route   POST /product
 const createProduct = async (req, res) => {
-  // console.log('POST /product created')
+  // console.log('POST /product endpoint triggered');
   const { name, description, price } = req.body
 
   // Validation
@@ -26,6 +27,7 @@ const createProduct = async (req, res) => {
   try {
     const product = new Product({ name, description, price })
     const savedProduct = await product.save()
+    console.log('Product created:', savedProduct)
     res.status(201).json(savedProduct)
   } catch (error) {
     res.status(500).json({ message: 'Failed to create product', error })
@@ -34,7 +36,7 @@ const createProduct = async (req, res) => {
 
 // @route   PUT /product/:id
 const updateProduct = async (req, res) => {
-  // console.log('PUT /product/:id updated')
+  // console.log(`PUT /product/${req.params.id} endpoint triggered`);
   const { id } = req.params
   const { name, description, price } = req.body
 
@@ -66,6 +68,7 @@ const updateProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' })
     }
 
+    console.log('Product updated:', updatedProduct)
     res.status(200).json(updatedProduct)
   } catch (error) {
     res.status(500).json({ message: 'Failed to update product', error })
@@ -74,7 +77,7 @@ const updateProduct = async (req, res) => {
 
 // @route   DELETE /product/:id
 const deleteProduct = async (req, res) => {
-  // console.log('DELETE /product/:id deleted')
+  // console.log(`DELETE /product/${req.params.id} endpoint triggered`);
   const { id } = req.params
 
   try {
@@ -84,6 +87,7 @@ const deleteProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' })
     }
 
+    console.log('Product deleted:', deletedProduct)
     res.status(200).json({ message: 'Product deleted successfully' })
   } catch (error) {
     res.status(500).json({ message: 'Failed to delete product', error })
