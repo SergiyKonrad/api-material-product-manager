@@ -39,6 +39,7 @@ Explore the full project at [API Material Product Manager](https://mern-book-lib
 
 - The app is hosted on **Render**(https://mern-book-library-app.vercel.app/???).
 - To fetch all products, access the endpoint: [http://localhost:5000/api/products](http://localhost:5000/api/products).
+- NB. You can comment out some the console.log outputs if needed.
 
 ## Contributions
 

@@ -17,12 +17,19 @@ const Product = require('../models/productModel')
 // }
 
 const getProducts = async (req, res) => {
-  const limit = parseInt(req.query.limit, 10) || 5 // Default limit
-  const offset = parseInt(req.query.offset, 10) || 0 // Default offset
+  const limit = parseInt(req.query.limit, 10) || 4
+  const offset = parseInt(req.query.offset, 10) || 0
 
   try {
-    const products = await Product.find().skip(offset).limit(limit)
-    console.log(`GET /products - Retrieved ${products.length} products`)
+    // const products = await Product.find().skip(offset).limit(limit)
+
+    const products = await Product.find()
+      .sort({ updatedAt: -1 }) // Sort by the most recent update
+      .skip(offset)
+      .limit(limit)
+    console.log(`Offset: ${offset}, Limit: ${limit}`)
+    // console.log(`GET /products - Retrieved ${products.length} products`)
+
     res.status(200).json(products)
   } catch (error) {
     console.error('Error fetching products:', error.message)
@@ -62,7 +69,7 @@ const createProduct = async (req, res) => {
 
 // @route   PUT /product/:id
 const updateProduct = async (req, res) => {
-  // console.log(`PUT /product/${req.params.id} endpoint triggered`);
+  // console.log(`PUT /product/${req.params.id} endpoint triggered`)
   const { id } = req.params
   const { name, description, price } = req.body
 
