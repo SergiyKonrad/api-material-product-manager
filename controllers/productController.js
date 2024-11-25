@@ -12,8 +12,7 @@ const getProducts = async (req, res) => {
       .skip(offset)
       .limit(limit)
 
-    console.log(`Offset: ${offset}, Limit: ${limit}`)
-    // console.log(`GET /products - Retrieved ${products.length} products`)
+    // console.log(`Offset: ${offset}, Limit: ${limit}`)
     res.status(200).json(products)
   } catch (error) {
     console.error('Error fetching products:', error.message)
@@ -25,7 +24,6 @@ const getProducts = async (req, res) => {
 
 // @route   POST /product
 const createProduct = async (req, res) => {
-  // console.log('POST /product endpoint triggered');
   const { name, title, description, price, image } = req.body
 
   // Handle compatibility between 'name' and 'title'
@@ -48,10 +46,10 @@ const createProduct = async (req, res) => {
       price,
       image: image
         ? image.trim()
-        : 'https://via.placeholder.com/150?text=No+Image+Available', // Use default if empty
+        : 'https://via.placeholder.com/150?text=No+Image+Available',
     })
     const savedProduct = await product.save()
-    console.log('POST /product - Product created:', savedProduct)
+    // console.log('POST /product - Product created:', savedProduct)
 
     res.status(201).json(savedProduct)
   } catch (error) {
@@ -64,7 +62,6 @@ const createProduct = async (req, res) => {
 
 // @route   PUT /product/:id
 const updateProduct = async (req, res) => {
-  // console.log(`PUT /product/${req.params.id} endpoint triggered`)
   const { id } = req.params
   const { name, description, price } = req.body
 
@@ -100,7 +97,7 @@ const updateProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' })
     }
 
-    console.log('PUT /product/:id - Product updated:', updatedProduct)
+    // console.log('PUT /product/:id - Product updated:', updatedProduct)
     res.status(200).json(updatedProduct)
   } catch (error) {
     console.error('Error updating product:', error.message)
@@ -121,7 +118,7 @@ const deleteProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' })
     }
 
-    console.log('DELETE /product/:id - Product deleted:', deletedProduct)
+    // console.log('DELETE /product/:id - Product deleted:', deletedProduct)
     res.status(200).json({ message: 'Product deleted successfully' })
   } catch (error) {
     console.error('Error deleting product:', error.message)

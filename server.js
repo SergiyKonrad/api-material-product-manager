@@ -5,10 +5,7 @@ const dotenv = require('dotenv')
 /* eslint-disable no-unused-vars */
 require('colors')
 
-// Load environment variables
 dotenv.config()
-
-// Connect to MongoDB
 connectDB()
 
 const app = express() // Initialize app
@@ -22,10 +19,9 @@ console.log('Middleware initialized'.cyan.bold)
 
 // Import product routes
 const productRoutes = require('./routes/productRoutes')
-
 app.use('/api', productRoutes)
 
-// --- another approach where all route definitions in productRoutes.js will be relative (e.g., /, /:id).
+// --- another approach where all route definitions in productRoutes will be relative (e.g., /, /:id).
 // app.use('/api/products', productRoutes)
 
 // Define a simple route

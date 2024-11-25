@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Product name is required'],
       match: /^[a-zA-Z0-9.,!'\- ]{1,50}$/,
-      // match: /^[\w.,!\- ]{1,30}$/, // Updated regex for validation
+      // match: /^[\w.,!\- ]{1,30}$/, // Another updated regex for validation
 
       trim: true,
       maxlength: [50, 'Product name must not exceed 50 characters'],

@@ -6,25 +6,24 @@ Explore the full project at [API Material Product Manager](https://mern-book-lib
 
 ## Features
 
-- **CRUD Operations**:
+### CRUD Operations
 
-  - `GET /api/products`: Fetch all products.
-  - `POST /api/product`: Add a new product.
-  - `PUT /api/product/:id`: Update an existing product by ID.
-  - `DELETE /api/product/:id`: Delete a product by ID.
+- **`GET /api/products`**: Fetch all products.
+- **`POST /api/product`**: Add a new product.
+- **`PUT /api/product/:id`**: Update an existing product by ID.
+- **`DELETE /api/product/:id`**: Delete a product by ID.
 
-- **Validation**:
+### Validation
 
-  - Backend validation for product fields (name, description, price, and image).
-  - Ensures robust error handling for invalid data.
+- Backend validation for product fields (`name`, `description`, `price`, and `image`).
+- Robust error handling ensures invalid data is not accepted.
 
 - **Default Values**:
 
-  - Automatically assigns a placeholder image URL if none is provided.
+  - Automatically assigns a placeholder image URL (`https://via.placeholder.com/150`) if no image is provided.
 
 - **CORS Enabled**:
-
-  - Allows cross-origin requests for frontend integration.
+- Cross-origin requests are enabled to allow seamless integration with frontend applications.
 
 - **MongoDB Integration**:
   - Utilizes **Mongoose** for schema modeling and database interaction.
@@ -38,14 +37,27 @@ Explore the full project at [API Material Product Manager](https://mern-book-lib
 ## Access the App -------
 
 - The app is hosted on **Render**(https://mern-book-library-app.vercel.app/???).
-- To fetch all products, access the endpoint: [http://localhost:5000/api/products](http://localhost:5000/api/products).
-- NB. You can comment out some the console.log outputs if needed.
+
+### Endpoints
+
+- **Fetch all products**:  
+  [http://localhost:5000/api/products](http://localhost:5000/api/products)
+- **Other CRUD operations**:  
+  Replace `localhost:5000` with your deployment URL in the API routes above.
+
+  ## Notes
+
+- To clean up logs for production, comment out or remove `console.log` statements in the code.
+- Ensure sensitive environment variables (e.g., `PORT`, `MONGO_URI`) are stored in a `.env` file and are **not committed** to version control. Add `.env` to your `.gitignore` file to keep it secure.
 
 ## Contributions
 
-This README provides a clear overview for potential collaborators or users. Customize details as needed to fit your specific project setup and requirements.
+Contributions are welcome!
 
-Feel free to open an issue or submit a pull request if you'd like to contribute to this project.
+Feel free to:
+
+- Open an issue for reporting bugs or suggesting new features.
+- Submit a pull request to propose improvements or fixes.
 
 ## License
 
