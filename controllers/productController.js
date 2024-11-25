@@ -1,35 +1,19 @@
 // logic for handling requests
 const Product = require('../models/productModel')
 
-// const getProducts = async (req, res) => {
-//   try {
-//     const limit = parseInt(req.query.limit, 10) || 5
-//     const products = await Product.find().limit(limit)
-
-//     console.log(`GET /products - Retrieved ${products.length} products`)
-//     res.status(200).json(products)
-//   } catch (error) {
-//     console.error('Error fetching products:', error.message)
-//     res
-//       .status(500)
-//       .json({ message: 'Failed to fetch products', error: error.message })
-//   }
-// }
-
+// @route   GET /product
 const getProducts = async (req, res) => {
   const limit = parseInt(req.query.limit, 10) || 4
   const offset = parseInt(req.query.offset, 10) || 0
 
   try {
-    // const products = await Product.find().skip(offset).limit(limit)
-
     const products = await Product.find()
       .sort({ updatedAt: -1 }) // Sort by the most recent update
       .skip(offset)
       .limit(limit)
+
     console.log(`Offset: ${offset}, Limit: ${limit}`)
     // console.log(`GET /products - Retrieved ${products.length} products`)
-
     res.status(200).json(products)
   } catch (error) {
     console.error('Error fetching products:', error.message)
@@ -42,10 +26,18 @@ const getProducts = async (req, res) => {
 // @route   POST /product
 const createProduct = async (req, res) => {
   // console.log('POST /product endpoint triggered');
-  const { name, description, price } = req.body
+  const { name, title, description, price, image } = req.body
+
+  // Handle compatibility between 'name' and 'title'
+  const productName = name || title
 
   // Validation
-  if (!name?.trim() || !description?.trim() || !price) {
+  if (
+    !productName?.trim() ||
+    !description?.trim() ||
+    !price ||
+    !image?.trim()
+  ) {
     return res.status(400).json({ message: 'All fields are required' })
   }
 
@@ -54,10 +46,13 @@ const createProduct = async (req, res) => {
       name: name.trim(),
       description: description.trim(),
       price,
+      image: image
+        ? image.trim()
+        : 'https://via.placeholder.com/150?text=No+Image+Available', // Use default if empty
     })
     const savedProduct = await product.save()
-
     console.log('POST /product - Product created:', savedProduct)
+
     res.status(201).json(savedProduct)
   } catch (error) {
     console.error('Error creating product:', error.message)

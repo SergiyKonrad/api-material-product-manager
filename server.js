@@ -42,7 +42,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 const PORT = process.env.PORT || 5000
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`.cyan.bold))
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`.cyan))
 
 // --- Minimalistic and straight to the point version.---
 // Easier to read for a smaller project without extra functionality like error handling.
