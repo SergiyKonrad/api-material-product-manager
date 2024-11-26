@@ -2,7 +2,7 @@
 
 A REST API for managing product data, built using **Node.js**, **Express**, and **MongoDB**.
 
-Explore the full project at [API Material Product Manager](https://https://react-ts-axios-project.vercel.app/).
+Explore the full project at [API Material Product Manager](https://react-ts-material-product-manager.vercel.app/).
 
 ## Features
 
