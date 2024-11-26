@@ -2,7 +2,7 @@
 
 A REST API for managing product data, built using **Node.js**, **Express**, and **MongoDB**.
 
-Explore the full project at [API Material Product Manager](https://mern-book-library-app.vercel.app/?????).
+Explore the full project at [API Material Product Manager](https://https://react-ts-axios-project.vercel.app/).
 
 ## Features
 
@@ -34,16 +34,20 @@ Explore the full project at [API Material Product Manager](https://mern-book-lib
 - **Database**: MongoDB (Mongoose for schema modeling)
 - **Dev Tools**: Nodemon, dotenv, colors
 
-## Access the App -------
+## Access the App
 
-- The app is hosted on **Render**(https://mern-book-library-app.vercel.app/???).
+The app is hosted on **Render**:  
+[https://api-material-product-manager.onrender.com](https://api-material-product-manager.onrender.com)
 
 ### Endpoints
 
 - **Fetch all products**:  
-  [http://localhost:5000/api/products](http://localhost:5000/api/products)
-- **Other CRUD operations**:  
-  Replace `localhost:5000` with your deployment URL in the API routes above.
+   [https://api-material-product-manager.onrender.com/api/products](https://api-material-product-manager.onrender.com/api/products)  
+   Open this endpoint in your browser to retrieve all products as JSON.
+
+  ### Security Note
+
+  This API is publicly accessible. Ensure proper authentication and validation when using or extending the API. Avoid exposing sensitive data and secure your environment variables.
 
   ## Notes
 
