@@ -17,7 +17,8 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'https://react-ts-material-product-manager.vercel.app',
+      'https://react-ts-axios-project.vercel.app',
+      // 'https://react-ts-material-product-manager.vercel.app',
     ], // // Allow local and production frontends (Vercel domain e.g.)
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
