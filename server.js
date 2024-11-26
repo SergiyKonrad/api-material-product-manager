@@ -30,7 +30,7 @@ console.log('Middleware initialized'.cyan.bold)
 
 // Import product routes
 const productRoutes = require('./routes/productRoutes')
-app.use('/api', productRoutes)
+app.use('/', productRoutes)
 
 // --- or another approach where all route definitions in productRoutes will be relative (e.g., /, /:id).
 // app.use('/api/products', productRoutes)
