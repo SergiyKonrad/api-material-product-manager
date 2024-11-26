@@ -3,7 +3,7 @@ const Product = require('../models/productModel')
 
 // @route   GET /product
 const getProducts = async (req, res) => {
-  const limit = parseInt(req.query.limit, 10) || 4
+  const limit = parseInt(req.query.limit, 10) || 5
   const offset = parseInt(req.query.offset, 10) || 0
 
   try {
