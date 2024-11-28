@@ -18,15 +18,16 @@ Explore the full project at [API Material Product Manager](https://react-ts-mate
 - Backend validation for product fields (`name`, `description`, `price`, and `image`).
 - Robust error handling ensures invalid data is not accepted.
 
-- **Default Values**:
-
-  - Automatically assigns a placeholder image URL (`https://via.placeholder.com/150`) if no image is provided.
-
 - **CORS Enabled**:
 - Cross-origin requests are enabled to allow seamless integration with frontend applications.
 
 - **MongoDB Integration**:
+
   - Utilizes **Mongoose** for schema modeling and database interaction.
+
+- **Default Values**:
+
+  - Automatically assigns a placeholder image URL (`https://via.placeholder.com/150`) if no image is provided.
 
 ## Tech Stack
 

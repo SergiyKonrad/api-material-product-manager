@@ -13,10 +13,15 @@ const getProducts = async (req, res) => {
       .skip(offset)
       .limit(limit)
 
+    // if (!products || products.length === 0) {
+    //   return res.status(200).json([])
+    // }
+
     // console.log(`Offset: ${offset}, Limit: ${limit}`)
     res.status(200).json(products)
   } catch (error) {
-    console.error('Error fetching products:', error.message)
+    // console.error('Error fetching products:', error.message)
+    console.error('Error:', error.message, error.stack)
     res.status(500).json({ message: 'Failed to fetch products' })
   }
 }
