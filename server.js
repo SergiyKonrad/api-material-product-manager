@@ -129,7 +129,16 @@ connectDB();
 const app = express(); // Initialize app
 
 // Middleware
-app.use(cors()); // Enable CORS
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'https://react-ts-material-product-manager.vercel.app',
+    ], // // Allow local and production frontends (Vercel domain e.g.)
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }),
+)
 app.use(express.json()); // Parse JSON requests
 
 // Import product routes

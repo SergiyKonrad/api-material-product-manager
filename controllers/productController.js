@@ -1,4 +1,5 @@
 // logic for handling requests
+const mongoose = require('mongoose')
 const Product = require('../models/productModel')
 
 // @route   GET /product
@@ -16,9 +17,7 @@ const getProducts = async (req, res) => {
     res.status(200).json(products)
   } catch (error) {
     console.error('Error fetching products:', error.message)
-    res
-      .status(500)
-      .json({ message: 'Failed to fetch products', error: error.message })
+    res.status(500).json({ message: 'Failed to fetch products' })
   }
 }
 
@@ -30,12 +29,7 @@ const createProduct = async (req, res) => {
   const productName = name || title
 
   // Validation
-  if (
-    !productName?.trim() ||
-    !description?.trim() ||
-    !price ||
-    !image?.trim()
-  ) {
+  if (!productName?.trim() || !description?.trim() || !price) {
     return res.status(400).json({ message: 'All fields are required' })
   }
 
@@ -53,10 +47,16 @@ const createProduct = async (req, res) => {
 
     res.status(201).json(savedProduct)
   } catch (error) {
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map((err) => err.message)
+      return res.status(400).json({
+        message: 'Validation failed',
+        errors,
+      })
+    }
+
     console.error('Error creating product:', error.message)
-    res
-      .status(500)
-      .json({ message: 'Failed to create product', error: error.message })
+    res.status(500).json({ message: 'Failed to create product' })
   }
 }
 
@@ -100,10 +100,16 @@ const updateProduct = async (req, res) => {
     // console.log('PUT /product/:id - Product updated:', updatedProduct)
     res.status(200).json(updatedProduct)
   } catch (error) {
+    if (error.name === 'ValidationError') {
+      const errors = Object.values(error.errors).map((err) => err.message)
+      return res.status(400).json({
+        message: 'Validation failed',
+        errors,
+      })
+    }
+
     console.error('Error updating product:', error.message)
-    res
-      .status(500)
-      .json({ message: 'Failed to update product', error: error.message })
+    res.status(500).json({ message: 'Failed to update product' })
   }
 }
 
@@ -112,6 +118,10 @@ const deleteProduct = async (req, res) => {
   const { id } = req.params
 
   try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid product ID' })
+    }
+
     const deletedProduct = await Product.findByIdAndDelete(id)
 
     if (!deletedProduct) {
@@ -122,9 +132,7 @@ const deleteProduct = async (req, res) => {
     res.status(200).json({ message: 'Product deleted successfully' })
   } catch (error) {
     console.error('Error deleting product:', error.message)
-    res
-      .status(500)
-      .json({ message: 'Failed to delete product', error: error.message })
+    res.status(500).json({ message: 'Failed to delete product' })
   }
 }
 
