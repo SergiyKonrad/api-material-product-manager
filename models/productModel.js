@@ -34,6 +34,7 @@ const productSchema = new mongoose.Schema(
     },
     image: {
       type: String,
+      // required: [true],
       default: 'https://via.placeholder.com/150?text=No+Image+Available', // Default image URL
     },
   },

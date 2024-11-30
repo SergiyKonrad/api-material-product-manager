@@ -1,4 +1,4 @@
-// logic for handling requests
+// logic for handling requests.
 const mongoose = require('mongoose')
 const Product = require('../models/productModel')
 
@@ -68,7 +68,7 @@ const createProduct = async (req, res) => {
 // @route   PUT /product/:id
 const updateProduct = async (req, res) => {
   const { id } = req.params
-  const { name, description, price } = req.body
+  const { name, description, price, image } = req.body
 
   // Validation
   if (!name?.trim() || name.length < 3 || name.length > 50) {
@@ -92,9 +92,23 @@ const updateProduct = async (req, res) => {
   }
 
   try {
+    const updateData = {
+      name: name.trim(),
+      description: description.trim(),
+      price,
+    }
+
+    // Add the image field only if it is provided
+    if (image) {
+      updateData.image = image.trim()
+    }
+
+    // Log the data before updating
+    // console.log('Updating product with:', updateData)
+
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
-      { name: name.trim(), description: description.trim(), price },
+      { $set: updateData },
       { new: true, runValidators: true },
     )
 
