@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const connectDB = require('./config/db')
 const dotenv = require('dotenv')
+const rateLimit = require('express-rate-limit')
 require('colors')
 
 dotenv.config()
@@ -9,8 +10,26 @@ connectDB()
 
 const app = express()
 
-// Middleware to enable CORS.
-// app.use(cors())
+// **Logging Middleware**
+// app.use((req, res, next) => {
+//   console.log(
+//     `Request received: ${req.method} ${req.originalUrl} from ${req.ip}`,
+//   )
+//   next()
+// })
+
+// Rate limiter
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window`
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many requests from this IP, please try again later.',
+})
+
+// the limiter is applied to all routes
+app.use(limiter)
 
 // Advanced CORS configuration
 app.use(
