@@ -5,12 +5,16 @@ const connectDB = require('./config/db')
 const dotenv = require('dotenv')
 const rateLimit = require('express-rate-limit')
 const statusRoute = require('./routes/statusRoute')
+const productRoutes = require('./routes/productRoutes')
 require('colors')
 
 dotenv.config()
 connectDB()
 
 const app = express()
+
+// Trust proxy for accurate client IP detection.
+app.set('trust proxy', 1) // Enable trust for the first proxy in the chain (e.g., Render's reverse proxy)
 
 // Use Helmet for security headers
 app.use(
@@ -19,27 +23,6 @@ app.use(
     crossOriginEmbedderPolicy: false, // Disable COEP for compatibility
   }),
 )
-
-// Logging Middleware for debugging purpose
-
-// app.use((req, res, next) => {
-//   console.log(
-//     `Request received: ${req.method} ${req.originalUrl} from ${req.ip}`,
-//   )
-//   next()
-// })
-
-// Rate limiter
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window`
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: 'Too many requests from this IP, please try again later.',
-})
-
-// the limiter is applied to all routes
-app.use(limiter)
 
 // Advanced CORS configuration
 app.use(
@@ -50,17 +33,30 @@ app.use(
     ], // Allow local and production frontends (Vercel domain e.g.)
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Include credentials (cookies, authorization headers, etc.)
   }),
 )
+
+// Rate limiter
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window`
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many requests from this IP, please try again later.',
+})
+
+// Apply the limiter to all routes
+app.use(limiter)
 
 // Middleware to parse JSON
 app.use(express.json())
 console.log('Middleware initialized'.cyan.bold)
 
 // Routes
-const productRoutes = require('./routes/productRoutes')
-app.use('/api', productRoutes)
-app.use('/', statusRoute)
+
+app.use('/api', productRoutes) // API routes for products
+app.use('/', statusRoute) // Status route for health check or homepage
 
 // Error handling middleware (optional)
 app.use((err, req, res, next) => {
@@ -72,10 +68,18 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`.cyan.bold))
 
-// --- or another approach where all route definitions in productRoutes will be relative (e.g., /, /:id) ---
+// --- Another approach where all route definitions in productRoutes will be relative (e.g., /, /:id) ---
 // app.use('/api/products', productRoutes)
 
-// --- Catch-all for undefined routes
+// --- Optional: Catch-all for undefined routes ---
 // app.use('*', (req, res) => {
 //   res.status(404).send('Route not found');
+// });
+
+// --- Optional: Logging Middleware for debugging purposes ---
+// app.use((req, res, next) => {
+//   console.log(
+//     `Request received: ${req.method} ${req.originalUrl} from ${req.ip}`,
+//   );
+//   next();
 // });

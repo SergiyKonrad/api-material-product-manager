@@ -13,21 +13,22 @@ Explore the full project at [React TS Material Product Manager](https://react-ts
 - **`PUT /api/product/:id`**: Update an existing product by ID.
 - **`DELETE /api/product/:id`**: Delete a product by ID.
 
+### Security Features
+
+- **Trust Proxy**: Configured for accurate client IP detection behind a reverse proxy (e.g., Render).
+- **Rate Limiting**: Limits requests to prevent abuse and ensure server stability.
+- **CORS Enabled**: Allows cross-origin requests for seamless integration with frontend applications.
+- **Helmet Integration**: Enhances API security by setting secure HTTP headers.
+
 ### Validation
 
 - Backend validation for product fields (`name`, `description`, `price`, and `image`).
 - Robust error handling ensures invalid data is not accepted.
 
-- **CORS Enabled**:
-- Cross-origin requests are enabled to allow seamless integration with frontend applications.
+### MongoDB Integration
 
-- **MongoDB Integration**:
-
-  - Utilizes **Mongoose** for schema modeling and database interaction.
-
-- **Default Values**:
-
-  - Automatically assigns a placeholder image URL (`https://via.placeholder.com/150`) if no image is provided.
+- Utilizes **Mongoose** for schema modeling and database interaction.
+- Automatically assigns a placeholder image URL (`https://via.placeholder.com/150`) if no image is provided.
 
 ## Tech Stack
 
@@ -50,10 +51,10 @@ The app is hosted on **Render**:
 
   This API is publicly accessible. Ensure proper authentication and validation when using or extending the API. Avoid exposing sensitive data and secure your environment variables.
 
-  ## Notes
+## Notes
 
-- To clean up logs for production, comment out or remove `console.log` statements in the code.
-- Ensure sensitive environment variables (e.g., `PORT`, `MONGO_URI`) are stored in a `.env` file and are **not committed** to version control. Add `.env` to your `.gitignore` file to keep it secure.
+- **Logs**: For production, clean up logs by commenting out or removing `console.log` statements.
+- **Environment Variables**: Store sensitive environment variables (e.g., `PORT`, `MONGO_URI`) in a `.env` file. Add `.env` to your `.gitignore` file to keep it secure.
 
 ## Contributions
 
