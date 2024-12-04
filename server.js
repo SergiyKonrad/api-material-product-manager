@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const helmet = require('helmet')
 const connectDB = require('./config/db')
 const dotenv = require('dotenv')
 const rateLimit = require('express-rate-limit')
@@ -10,6 +11,14 @@ dotenv.config()
 connectDB()
 
 const app = express()
+
+// Use Helmet for security headers
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // Disable CSP for development
+    crossOriginEmbedderPolicy: false, // Disable COEP for compatibility
+  }),
+)
 
 // Logging Middleware for debugging purpose
 
@@ -38,7 +47,7 @@ app.use(
     origin: [
       'http://localhost:3000',
       'https://react-ts-material-product-manager.vercel.app',
-    ], // // Allow local and production frontends (Vercel domain e.g.)
+    ], // Allow local and production frontends (Vercel domain e.g.)
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   }),
@@ -48,11 +57,9 @@ app.use(
 app.use(express.json())
 console.log('Middleware initialized'.cyan.bold)
 
-// Import product routes
+// Routes
 const productRoutes = require('./routes/productRoutes')
 app.use('/api', productRoutes)
-
-// Any GET / requests is handled by statusRoute.
 app.use('/', statusRoute)
 
 // Error handling middleware (optional)
