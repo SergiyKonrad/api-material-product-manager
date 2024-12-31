@@ -18,32 +18,32 @@ app.set('trust proxy', 1) // Enable trust for the first proxy in the chain (e.g.
 
 // Use Helmet for security headers
 app.use(
-  helmet({
-    contentSecurityPolicy: false, // Disable CSP for development
-    crossOriginEmbedderPolicy: false, // Disable COEP for compatibility
-  }),
+    helmet({
+        contentSecurityPolicy: false, // Disable CSP for development
+        crossOriginEmbedderPolicy: false, // Disable COEP for compatibility
+    }),
 )
 
 // Advanced CORS configuration
 app.use(
-  cors({
-    origin: [
-      'http://localhost:3000',
-      'https://react-ts-material-product-manager.vercel.app',
-    ], // Allow local and production frontends (Vercel domain e.g.)
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, // Include credentials (cookies, authorization headers, etc.)
-  }),
+    cors({
+        origin: [
+            'http://localhost:3000',
+            'https://react-ts-material-product-manager.vercel.app',
+        ], // Allow local and production frontends (Vercel domain e.g.)
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true, // Include credentials (cookies, authorization headers, etc.)
+    }),
 )
 
 // Rate limiter
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window`
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: 'Too many requests from this IP, please try again later.',
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window`
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: 'Too many requests from this IP, please try again later.',
 })
 
 // Apply the limiter to all routes
@@ -60,8 +60,8 @@ app.use('/', statusRoute) // Status route for health check or homepage
 
 // Error handling middleware (optional)
 app.use((err, req, res, next) => {
-  console.error(err.message.red)
-  res.status(500).json({ message: 'Server Error' })
+    console.error(err.message.red)
+    res.status(500).json({ message: 'Server Error' })
 })
 
 // Start server

@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 
 const {
-  getProducts,
-  createProduct,
-  updateProduct,
-  deleteProduct,
+    getProducts,
+    createProduct,
+    updateProduct,
+    deleteProduct,
 } = require('../controllers/productController')
 
 // GET (fetches) all products

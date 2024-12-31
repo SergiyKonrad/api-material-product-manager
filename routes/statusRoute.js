@@ -3,8 +3,8 @@ const router = express.Router()
 
 // Status route
 router.get('/', (req, res) => {
-  try {
-    const spinnerHTML = `
+    try {
+        const spinnerHTML = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -57,10 +57,12 @@ router.get('/', (req, res) => {
     </body>
     </html>
   `
-    res.send(spinnerHTML)
-  } catch (error) {
-    res.status(500).send('An error occurred while rendering the status page.')
-  }
+        res.send(spinnerHTML)
+    } catch (error) {
+        res.status(500).send(
+            'An error occurred while rendering the status page.',
+        )
+    }
 })
 
 module.exports = router
